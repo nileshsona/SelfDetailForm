@@ -44,3 +44,31 @@
 #rr-element label {
  padding-right: 30px;
 }
+
+.innerDiv {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  height: 50px;
+}
+
+th {
+  background-color: darkgoldenrod;
+  color: white;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+.divstyle {
+  text-align: center;
+}

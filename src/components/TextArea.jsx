@@ -12,7 +12,7 @@ const TextArea = props => (
       onChange={props.handleChange}
       placeholder={props.placeholder}
       style={{  
-        height: 100
+        height: 80
     }}
     />
   </div>

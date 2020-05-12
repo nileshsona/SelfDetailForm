@@ -6,166 +6,57 @@ import Select from "../components/Select";
 import Button from "../components/Button";
 
 class FormContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      newUser: {
-        name: "",
-        age: "",
-        gender: "",
-        hobbies: [],
-        about: ""
-      },
-
-      genderOptions: ["Male", "Female", "Others"],
-      skillOptions: ["Dancer","Acting","Writer"]
-    };
-    this.handleTextArea = this.handleTextArea.bind(this);
-    this.handleAge = this.handleAge.bind(this);
-    this.handleFullName = this.handleFullName.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.handleClearForm = this.handleClearForm.bind(this);
-    this.handleCheckBox = this.handleCheckBox.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-  }
-
-  handleFullName(e) {
-    let value = e.target.value;
-    this.setState(
-      prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          name: value
-        }
-      }),
-      () => console.log(this.state.newUser)
-    );
-  }
-
-  handleAge(e) {
-    let value = e.target.value;
-    this.setState(
-      prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          age: value
-        }
-      })
-    );
-  }
-
-  handleInput(e) {
-    let value = e.target.value;
-    let name = e.target.name;
-    this.setState(
-      prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          [name]: value
-        }
-      })
-    );
-  }
-
-  handleTextArea(e) {
-    let value = e.target.value;
-    this.setState(
-      prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          about: value
-        }
-      })
-    );
-  }
-
-  handleCheckBox(e) {
-    const newSelection = e.target.value;
-    let newitemseletecd;
-
-    if (this.state.newUser.hobbies.indexOf(newSelection) > -1) {
-      newitemseletecd = this.state.newUser.hobbies.filter(
-        s => s !== newSelection
-      );
-    } else {
-      newitemseletecd = [...this.state.newUser.hobbies, newSelection];
-    }
-
-    this.setState(prevState => ({
-      newUser: { ...prevState.newUser, hobbies: newitemseletecd }
-    }));
-  }
-
-  handleFormSubmit(e) {
-    e.preventDefault();
-    let userData = this.state.newUser;
-    alert (JSON.stringify(userData)); 
-  }
-
-  handleClearForm(e) {
-    e.preventDefault();
-    this.setState({
-      newUser: {
-        name: "",
-        age: "",
-        gender: "",
-        hobbies: [],
-        about: ""
-      }
-    });
-  }
-
+  
   render() {
     return (
-      <form className="container-fluid" onSubmit={this.handleFormSubmit}>
+      <form className="container-fluid" onSubmit={this.props.onFormSubmit}>
         <Input
           inputtype={"text"}
           title={"Full Name"}
           name={"name"}
-          value={this.state.newUser.name}
+          value={this.props.userdata.newUser.name}
           placeholder={"Enter your name"}
-          handleChange={this.handleInput}
+          handleChange={ (e) => this.props.onHandleInput(e)}
         />{" "}
         <Input
           inputtype={"number"}
           name={"age"}
           title={"Age"}
-          value={this.state.newUser.age}
+          value={this.props.userdata.newUser.age}
           placeholder={"Enter your age"}
-          handleChange={this.handleAge}
+          handleChange={(e) => this.props.onHandleAge(e)}
         />{" "}        
         <Select
           title={"Gender"}
           name={"gender"}
-          options={this.state.genderOptions}
-          value={this.state.newUser.gender}
+          options={this.props.userdata.genderOptions}
+          value={this.props.userdata.newUser.gender}
           placeholder={"Select Gender"}
-          handleChange={this.handleInput}
+          handleChange={(e) => this.props.onHandleInput(e)}
         />{" "}   
         <CheckBox
           title={"hobbies"}
           name={"hobbies"}
-          options={this.state.skillOptions}
-          selectedOptions={this.state.newUser.hobbies}
-          handleChange={this.handleCheckBox}
+          options={this.props.userdata.skillOptions}
+          selectedOptions={this.props.userdata.newUser.hobbies}
+          handleChange={ (e) => this.props.onHandleCheck(e)}
         />{" "}      
         <TextArea
           title={"About you."}
           rows={10}
-          value={this.state.newUser.about}
+          value={this.props.userdata.newUser.about}
           name={"currentInfo"}
-          handleChange={this.handleTextArea}
+          handleChange={ (e) => this.props.onHandleText(e)}
           placeholder={"Describe your past experience and hobbies"}
         />       
         <Button
-          action={this.handleFormSubmit}
+          action={this.props.onFormSubmit}
           type={"primary"}
           title={"Submit"}
           style={buttonStyle}
         />{" "}       
         <Button
-          action={this.handleClearForm}
+          action={this.props.onFormClear}
           type={"secondary"}
           title={"Clear"}
           style={buttonStyle}
